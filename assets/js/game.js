@@ -6,12 +6,13 @@ var playerMoney = 10;
 
 console.log(playerName, playerAttack, playerHealth);
 
-var enemyName = "Roborto";
+// Enemy info
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 // Fight function
-var fight = function () {
+var fight = function(enemyName) {
     // Alert players that they are starting the round
     window.alert("Welcome to Robot Gladiators!");
 };
@@ -24,24 +25,19 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
 
     // Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
     enemyHealth = enemyHealth - playerAttack;
-
-    // Log a resulting message to the console so we know that it worked.
-    console.log(
+        console.log(
         playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
     );
-
+    
     // Check enemy's health
     if (enemyHealth <= 0) {
         window.alert(enemyName + " has died!")
-    }
-    else {
+    } else {
         window.alert(enemyName + " still has " + enemyHealth + " health left.")
     }
 
     // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
     playerHealth = playerHealth - enemyAttack;
-
-    // Log a resulting message to the console so we know that it worked.
     console.log(
         enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
     );
@@ -49,8 +45,7 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
     // Check player's health
     if (playerHealth <= 0) {
         window.alert(playerName + " has died!")
-    }
-    else {
+    } else {
         window.alert(playerName + " still has " + playerHealth + " health left.")
     }
 
@@ -66,17 +61,19 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
         // Subtract money from playerMoney for skipping
         playerMoney = playerMoney - 2;
     }
-
     // if no (false), ask question again by running fight() again
     else {
         fight();
     }
-
+    // if player does not choose either option
 } else {
     window.alert("You need to try a valid option. Try again!");
-}
+} // end of fight function
 
-fight();
+// run fight function to start game
+for(var i = 0; i < enemyNames.length; i++) {
+    fight(enemyNames[i]);
+}
 
 
 
@@ -85,7 +82,16 @@ data types:
 var stringDataType = "text";        must be wrapped in double or single quotes
 var numberIntergerDataType = 10;    can be an integer or have decimals
 var numberFloatDataType = 10.4;   
-var booleonDataType = true;         can only be given a value of true or false
+var booleonDataType = true;         can only be given a value of true or false    
+
+primitive data types:
+*Boolean    true or false (one or two values)                           'typeof false'                                                                                             
+*Null       an absence of value (zero or absence of date=a)
+Undefined   undefined
+*Number     numberic value up to 2 to the 53rd power minus 1            'typeof 10'
+BitInt      whole numbers - value over 2 to the 53rd power minus 1
+*String     once created - cannot modify                                'typeof "hello, world"'
+Symbol      key of an object property
 
 var (variable)          captures the data from the window.prompt
 
