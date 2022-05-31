@@ -1,11 +1,11 @@
 
-/* GAME FUNCTIONS */
+/* GLOBAL GAME FUNCTIONS */
 // function to generate a random numeric value
 var randomNumber = function (min, max) {
     var value = Math.floor(Math.random() * (max - min) + min);
     return value;
 };
-// function to check if player wants to fight or skip
+// *FUNCTION TO FIGHT OR SKIP*
 var fightOrSkip = function () {
     // ask player if they'd like to fight or run
     var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
@@ -33,7 +33,7 @@ var fightOrSkip = function () {
     return false;
 };
 
-// fight function (now with parameter for enemy's object holding name, health, and attack values)
+// *ROBOT FIGHT FUNCTION*
 var fight = function (enemy) {
     // keep track of who goes first
     var isPlayerTurn = true;
@@ -79,6 +79,7 @@ var fight = function (enemy) {
             console.log(
                 enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
             );
+
             // check player's health
             if (playerInfo.health <= 0) {
                 window.alert(playerInfo.name + " has died!");
@@ -92,10 +93,10 @@ var fight = function (enemy) {
         // switch turn order for next round
         isPlayerTurn = !isPlayerTurn;
 
-    } // end of while loop
-}; //end of fight function
+    }
+};
 
-// function to start a new game
+// *FUNCTION TO START A NEW GAME*
 var startGame = function () {
 
     // reset player stats
@@ -103,7 +104,7 @@ var startGame = function () {
 
     // run fight function to start game
     for (var i = 0; i < enemyInfo.length; i++) {
-
+    
         // if player is still alive, keep fighting
         if (playerInfo.health > 0) {
 
@@ -142,22 +143,36 @@ var startGame = function () {
     endGame();
 };
 
-//function to end the entire game
+// *FUNCTION TO END ENTIRE GAME*
 var endGame = function () {
     window.alert("The game has now ended. Let's see how you did!");
 
-    // if player is still alive, player wins!
-    if (playerInfo.health > 0) {
-        window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
-    } else {
-        window.alert("You've lost your robot in battle!");
+    // check localStorage for high score, if it's not there, use 0
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
     }
+
+    // if player has more money than the high score, player has new high score!
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+
+        alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+    } else {
+        alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
+    }
+    // // if player is still alive, player wins!
+    // if (playerInfo.health > 0) {
+    //     window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
+    // } else {
+    //     window.alert("You've lost your robot in battle!");
+    // }
 
     // ask player if they'd like to play again
     var playAgainConfirm = window.confirm("Would you like to play again?");
 
     if (playAgainConfirm) {
-
         // restart the game
         startGame();
     } else {
@@ -165,7 +180,7 @@ var endGame = function () {
     }
 };
 
-// go to shop between battles function
+// *FUNCTION TO SHOP BETWEEN ROUNDS*
 var shop = function () {
 
     // ask player what they'd like to do
@@ -193,6 +208,7 @@ var shop = function () {
             break;
     }
 };
+
 // function to set game
 var getPlayerName = function () {
     var name = "";
@@ -204,9 +220,9 @@ var getPlayerName = function () {
     return name;
 };
 
-/* END GAME FUNCTIONS */
-/* GAME INFORMATION/VARIABLES */
-// player name entry and properties
+
+// *GAME INFORMATION & VARIABLES*
+// player: name and properties
 var playerInfo = {
     name: getPlayerName(),
     health: 100,
@@ -237,7 +253,7 @@ var playerInfo = {
     }
 };
 
-// enemy robot names and properties
+// enemy robot: names and properties
 var enemyInfo = [
     {
         name: "Roborto",
@@ -253,5 +269,5 @@ var enemyInfo = [
     }
 ];
 
-// start first game when the page loads
+// *RUN GAME*
 startGame();
